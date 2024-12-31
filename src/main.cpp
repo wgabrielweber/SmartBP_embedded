@@ -44,16 +44,16 @@ void setup() {
     }
 
     // Sensor Setup
-//_____________________________  sample rate = 800Hz  ; pulse width = 215 ; adc range = 17 bits ; 200Hz with 4 samples
-//_____________________________  sample rate = 1000Hz : pulse width = 118 ; adc range = 16 bits ; 125Hz with 8 samples
-//_____________________________  sample rate = 1600Hz ; pulse width = 69  ; adc range = 15 bits ; 200Hz with 8 samples
-//_____________________________  sample rate = 1600Hz ; pulse width = 69  ; adc range = 15 bits ; 100Hz with 16 samples
-    byte ledBrightness = 0x1F; //Options: 0=Off to 255=50mA
-    byte sampleAverage = 8;   //Options: 1, 2, 4, 8, 16, 32
-    byte ledMode = 2;          //Options: 1 = Red only, 2 = Red + IR, 3 = Red + IR + Green
-    int sampleRate = 1000;     //Options: 50, 100, 200, 400, 800, 1000, 1600, 3200
-    int pulseWidth = 118;       //Options: 69, 118, 215, 411
-    int adcRange = 16;         //Options: 15, 16, 17, 18 [bits]
+    //_____________________________  sample rate = 800Hz  ; pulse width = 215 ; adc range = 17 bits ; 200Hz with 4 samples
+    //_____________________________  sample rate = 1000Hz : pulse width = 118 ; adc range = 16 bits ; 125Hz with 8 samples
+    //_____________________________  sample rate = 1600Hz ; pulse width = 69  ; adc range = 15 bits ; 200Hz with 8 samples
+    //_____________________________  sample rate = 1600Hz ; pulse width = 69  ; adc range = 15 bits ; 100Hz with 16 samples
+    byte ledBrightness = 0x1F;    // Options: 0=Off to 255=50mA
+    byte sampleAverage = 4;       // Options: 1, 2, 4, 8, 16, 32
+    byte ledMode = 2;             // Options: 1 = Red only, 2 = Red + IR, 3 = Red + IR + Green
+    int sampleRate = 800;         // Options: 50, 100, 200, 400, 800, 1000, 1600, 3200
+    int pulseWidth = 215;         // Options: 69, 118, 215, 411
+    int adcRange = 17;            // Options: 15, 16, 17, 18 [bits]
 
     ppgSensor.setup(ledBrightness, sampleAverage, ledMode, sampleRate, pulseWidth, adcRange); //Configure sensor with these settings
 
@@ -77,6 +77,7 @@ void setup() {
 void loop() {
     if (!client.connected()) {
         Serial.println("MQTT not connected. Reconnecting...");
+        displayNotConnected();
         connectToMQTT(); // Reconnect if the client is disconnected
     }
 

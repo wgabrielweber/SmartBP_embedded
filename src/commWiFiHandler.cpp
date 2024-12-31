@@ -1,6 +1,7 @@
 #include "commWiFiHandler.h"
 #include <WiFi.h>
 #include "commTimeManager.h"
+#include "displayFunctions.h"
 #include "defines.h"
 
 // Wi-Fi credentials
@@ -29,6 +30,7 @@ void setupWiFi() {
         Serial.println(WiFi.localIP());
     } else {
         Serial.println("\nWi-Fi connection failed! Restarting...");
+        displayNotConnected();
         delay(5000);
         ESP.restart();
     }
