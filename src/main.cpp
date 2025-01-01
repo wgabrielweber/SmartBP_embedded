@@ -44,24 +44,7 @@ void setup() {
     }
 
     // Sensor Setup
-    //_____________________________  sample rate = 800Hz  ; pulse width = 215 ; adc range = 17 bits ; 200Hz with 4 samples
-    //_____________________________  sample rate = 1000Hz : pulse width = 118 ; adc range = 16 bits ; 125Hz with 8 samples
-    //_____________________________  sample rate = 1600Hz ; pulse width = 69  ; adc range = 15 bits ; 200Hz with 8 samples
-    //_____________________________  sample rate = 1600Hz ; pulse width = 69  ; adc range = 15 bits ; 100Hz with 16 samples
-    byte ledBrightness = 0x1F;    // Options: 0=Off to 255=50mA
-    byte sampleAverage = 4;       // Options: 1, 2, 4, 8, 16, 32
-    byte ledMode = 2;             // Options: 1 = Red only, 2 = Red + IR, 3 = Red + IR + Green
-    int sampleRate = 800;         // Options: 50, 100, 200, 400, 800, 1000, 1600, 3200
-    int pulseWidth = 215;         // Options: 69, 118, 215, 411
-    int adcRange = 17;            // Options: 15, 16, 17, 18 [bits]
-
-    ppgSensor.setup(ledBrightness, sampleAverage, ledMode, sampleRate, pulseWidth, adcRange); //Configure sensor with these settings
-
-    ppgSensor.enableAFULL(); //Enable the almost full interrupt (default is 32 samples)
-
-    ppgSensor.setFIFOAlmostFull(3); //Set almost full int to fire at 29 samples
-
-    ppgSensor.shutDown(); // Shut down the sensor, wake up only when a measure will be made
+    sensorSetup(2);
 
     // Initialize OLED
     if (!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {

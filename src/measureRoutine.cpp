@@ -87,3 +87,52 @@ void performMeasurement() {
     // Oled Data Sent
     displayDataSent();
 }
+
+// Function to set up the sensor parameters
+void sensorSetup(unsigned int parameter) {
+    // Default Sensor Configuration
+    byte ledBrightness = 0x1F;    // Options: 0=Off to 255=50mA
+    byte sampleAverage = 8;       // Options: 1, 2, 4, 8, 16, 32
+    byte ledMode = 2;             // Options: 1 = Red only, 2 = Red + IR, 3 = Red + IR + Green
+    int sampleRate = 1000;        // Options: 50, 100, 200, 400, 800, 1000, 1600, 3200
+    int pulseWidth = 118;         // Options: 69, 118, 215, 411
+    int adcRange = 16;            // Options: 15, 16, 17, 18 [bits]
+
+    // Configure sensor parameters based on the input parameter
+    switch (parameter) {
+        case 1:
+            sampleRate = 800;
+            pulseWidth = 215;
+            adcRange = 17;
+            sampleAverage = 4;  // 200Hz with 4 samples
+            break;
+        case 2:
+            sampleRate = 1000;
+            pulseWidth = 118;
+            adcRange = 16;
+            sampleAverage = 8;  // 125Hz with 8 samples
+            break;
+        case 3:
+            sampleRate = 1600;
+            pulseWidth = 69;
+            adcRange = 15;
+            sampleAverage = 8;  // 200Hz with 8 samples
+            break;
+        case 4:
+            sampleRate = 1600;
+            pulseWidth = 69;
+            adcRange = 15;
+            sampleAverage = 16; // 100Hz with 16 samples
+            break;
+        default:
+            Serial.println("Invalid parameter. Using default configuration.");
+            break;
+    }
+
+    // Apply the configuration to the sensor
+    ppgSensor.setup(ledBrightness, sampleAverage, ledMode, sampleRate, pulseWidth, adcRange); // Configure sensor
+
+    ppgSensor.enableAFULL();          // Enable the almost full interrupt (default is 32 samples)
+    ppgSensor.setFIFOAlmostFull(3);   // Set almost full interrupt to fire at 29 samples
+    ppgSensor.shutDown();             // Shut down the sensor, wake up only when a measure is made
+}
