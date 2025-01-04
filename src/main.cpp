@@ -12,9 +12,11 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-unsigned long lastPublishTime = 0;
-const unsigned long publishInterval = 15000; // 15 seconds for publishing
-unsigned long lastRequestedPublishTime = 0;
+// Declaring constants
+//unsigned long lastPublishTime = 0;
+//const unsigned long publishInterval = 15000; // 15 seconds for publishing
+//unsigned long lastRequestedPublishTime = 0;
+short int sensor_param = 0;
 
 // Define Global instances
 MAX30105 ppgSensor;
@@ -44,6 +46,7 @@ void setup() {
     }
 
     // Sensor Setup
+    sensor_param= 2;
     sensorSetup(2);
 
     // Initialize OLED

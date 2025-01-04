@@ -12,6 +12,7 @@ extern PubSubClient client;
 extern MAX30105 ppgSensor;
 extern Adafruit_SSD1306 display;
 extern unsigned long lastRequestedPublishTime;
+extern short int sensor_param;
 extern const char* mqtt_data_topic;
 
 #endif
