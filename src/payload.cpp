@@ -27,11 +27,13 @@ String createJsonPayload(unsigned int currentIndex, unsigned int* redValues, uns
     return payload;
 }
 
-
 // Function to format the data as a string
-String createStringPayload(String deviceId, unsigned long timestamp, unsigned int measureTime, unsigned int redArray[], unsigned int irArray[], int arraySize) {
+String createStringPayload(String deviceId, short int sensor_param, unsigned long timestamp, unsigned int measureTime, unsigned int redArray[], unsigned int irArray[], int arraySize) {
     String payload = deviceId;  // Add deviceId to the start of the payload
     payload += ";";  // Delimiter between fields
+
+    payload = String(sensor_param);  // Add sensor parameters
+    payload += ";";  // Delimiter
 
     payload += String(timestamp);  // Add timestamp
     payload += ";";  // Delimiter
@@ -43,10 +45,35 @@ String createStringPayload(String deviceId, unsigned long timestamp, unsigned in
     payload += "[";
     for (int i = 0; i < arraySize; i++) {
         payload += String(redArray[i]);
-        if (i < arraySize - 1) payload += ", ";  // Add a comma between values
+        if (i < arraySize - 1) payload += ",";  // Add a comma between values
     }
     payload += "]";  // Close the red array
 
+    payload += ";";  // Delimiter
+
+    // Convert ir array to a string format
+    payload += "[";
+    for (int i = 0; i < arraySize; i++) {
+        payload += String(irArray[i]);
+        if (i < arraySize - 1) payload += ",";  // Add a comma between values
+    }
+    payload += "]";  // Close the ir array
+
+    return payload;  // Return the complete payload string
+}
+
+// Function to format the data as a string
+String createStringPayloadIrOnly(String deviceId, short int sensor_param, unsigned long timestamp, unsigned int measureTime, unsigned int irArray[], int arraySize) {
+    String payload = deviceId;    // Add deviceId to the start of the payload
+    payload += ";";  // Delimiter between fields
+
+    payload = String(sensor_param);  // Add sensor parameters
+    payload += ";";  // Delimiter
+
+    payload += String(timestamp);  // Add timestamp
+    payload += ";";  // Delimiter
+
+    payload += String(measureTime);  // Add measure time
     payload += ";";  // Delimiter
 
     // Convert ir array to a string format

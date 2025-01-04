@@ -3,10 +3,8 @@
 
 #include <ArduinoJson.h>
 
-// Function to create a JSON payload
 String createJsonPayload(unsigned int currentIndex, unsigned int* redValues, unsigned int* irValues);
-
-// Function to create a String payload
-String createStringPayload (String deviceId, unsigned long timestamp, unsigned int measureTime, unsigned int redArray[], unsigned int irArray[], int arraySize);
+String createStringPayload (String deviceId, short int sensor_param, unsigned long timestamp, unsigned int measureTime, unsigned int redArray[], unsigned int irArray[], int arraySize);
+String createStringPayloadIrOnly(String deviceId, short int sensor_param, unsigned long timestamp, unsigned int measureTime, unsigned int irArray[], int arraySize);
 
 #endif // PAYLOAD_H
