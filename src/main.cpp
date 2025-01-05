@@ -36,7 +36,9 @@ void setup() {
     client.setCallback(mqttCallback); 
     connectToMQTT();
 
-    client.subscribe("prototype_esp/command");
+    client.subscribe("prototype_esp/command/setup");
+    client.subscribe("prototype_esp/command/requestIrMeasure");
+    client.subscribe("prototype_esp/command/requestMeasure");
 
     // Initialize sensor
     if (!ppgSensor.begin(Wire, I2C_SPEED_FAST)) //Use default I2C port, 400kHz speed
