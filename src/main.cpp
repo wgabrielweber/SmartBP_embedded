@@ -59,6 +59,9 @@ void setup() {
     display.display();
     delay(2000); // Pause for 2 seconds
     display.clearDisplay();
+    
+    // Set the pin 23 as an output to control the led indicator
+    pinMode(LED_PIN,OUTPUT);
 
 }
 

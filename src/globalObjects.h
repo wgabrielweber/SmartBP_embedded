@@ -1,5 +1,6 @@
 #ifndef GLOBALOBJECTS_H
 #define GLOBALOBJECTS_H
+#define LED_PIN 23
 
 #include <WiFiClient.h>
 #include <PubSubClient.h>
