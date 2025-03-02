@@ -13,9 +13,6 @@
 #include <Adafruit_SSD1306.h>
 
 // Declaring constants
-//unsigned long lastPublishTime = 0;
-//const unsigned long publishInterval = 15000; // 15 seconds for publishing
-//unsigned long lastRequestedPublishTime = 0;
 short int sensor_param = 0;
 
 // Define Global instances
@@ -56,6 +53,8 @@ void setup() {
         Serial.println("OLED initialization failed. Please check wiring.");
         while (1);
     }
+    display.setRotation(2);  // Set display orientation
+    display.clearDisplay();
     display.display();
     delay(2000); // Pause for 2 seconds
     display.clearDisplay();

@@ -9,6 +9,8 @@
 // MQTT Broker credentials and topics
 const char* mqtt_server = MQTT_SERVER;
 const int mqtt_port = MQTT_PORT;
+const char* mqtt_user = MQTT_USER;
+const char* mqtt_password = MQTT_PASSWORD;
 const char* mqtt_data_topic = MQTT_DATA_TOPIC;
 
 // Define global instances

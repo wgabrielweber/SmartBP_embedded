@@ -65,8 +65,7 @@ void performMeasurementIrOnly(unsigned short int num_samples) {
     // Turn the led off
     digitalWrite(LED_PIN, LOW);
 
-    // Find the minimum values in the arrays
-    unsigned int redMin = 262144;
+    // Find the minimu value in the array
     unsigned int irMin  = 262144;
 
     for (unsigned int i = 0; i < arraySamples; i++) {
@@ -92,7 +91,10 @@ void performMeasurementIrOnly(unsigned short int num_samples) {
 void performMeasurement(unsigned short int num_samples) {   
     // Oled New Measure
     displayNewMeasure();
-    
+
+    // Turn the led on
+    digitalWrite(LED_PIN, HIGH);
+
     // Wake the sensor
     ppgSensor.wakeUp();
 
@@ -145,6 +147,9 @@ void performMeasurement(unsigned short int num_samples) {
 
     // Once the loop ends, array is full
     Serial.println("Data collection complete. Performing optimization...");
+
+    // Turn the led off
+    digitalWrite(LED_PIN, LOW);
 
     // Find the minimum values in the arrays
     unsigned int redMin = 262144;
