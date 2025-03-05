@@ -19,15 +19,54 @@ PubSubClient client(espClient); // Definition for the global instance of PubSubC
 
 void connectToMQTT() {
     client.setServer(mqtt_server, mqtt_port);
+    client.setKeepAlive(60);  // Set keep-alive to 60 seconds
+
     while (!client.connected()) {
         Serial.print("Connecting to MQTT broker...");
-        if (client.connect("ESP32Client")) {
+        uint64_t chipId = ESP.getEfuseMac();
+        String clientID = "ESP32Client_" + String(chipId, HEX);  // Convert the MAC address to a hexadecimal string
+
+        // Attempt to connect with unique client ID
+        if (client.connect(clientID.c_str())) {
             Serial.println("connected");
             client.subscribe(mqtt_data_topic); // Subscribe to a topic
         } else {
             Serial.print("failed, rc=");
-            Serial.print(client.state());
-            Serial.println(" trying again in 5 seconds");
+            Serial.println(client.state());  // Print the return code
+            // Log a more descriptive message based on the return code
+            switch (client.state()) {
+                case MQTT_CONNECTION_TIMEOUT:
+                    Serial.println("Connection timeout");
+                    break;
+                case MQTT_CONNECTION_LOST:
+                    Serial.println("Connection lost");
+                    break;
+                case MQTT_CONNECT_FAILED:
+                    Serial.println("Failed to connect");
+                    break;
+                case MQTT_DISCONNECTED:
+                    Serial.println("Disconnected");
+                    break;
+                case MQTT_CONNECT_BAD_PROTOCOL:
+                    Serial.println("Bad protocol");
+                    break;
+                case MQTT_CONNECT_BAD_CLIENT_ID:
+                    Serial.println("Bad client ID");
+                    break;
+                case MQTT_CONNECT_UNAVAILABLE:
+                    Serial.println("Service unavailable");
+                    break;
+                case MQTT_CONNECT_BAD_CREDENTIALS:
+                    Serial.println("Bad credentials");
+                    break;
+                case MQTT_CONNECT_UNAUTHORIZED:
+                    Serial.println("Unauthorized");
+                    break;
+                default:
+                    Serial.println("Unknown error");
+                    break;
+            }
+            Serial.println("Trying again in 5 seconds");
             delay(5000);
         }
     }
